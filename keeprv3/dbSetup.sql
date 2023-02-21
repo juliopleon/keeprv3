@@ -23,3 +23,5 @@ CREATE TABLE
         kept INT NOT NULL DEFAULT 0,
         FOREIGN KEY(creatorId) REFERENCES accounts(id) ON DELETE CASCADE
     ) default charset utf8 COMMENT '';
+
+CREATE TABLE IF NOT EXISTS vaults( ) 
