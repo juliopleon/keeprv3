@@ -24,4 +24,23 @@ CREATE TABLE
         FOREIGN KEY(creatorId) REFERENCES accounts(id) ON DELETE CASCADE
     ) default charset utf8 COMMENT '';
 
-CREATE TABLE IF NOT EXISTS vaults( ) 
+CREATE TABLE
+    IF NOT EXISTS vaults(
+        id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+        creatorId VARCHAR(255) NOT NULL,
+        name VARCHAR(225) NOT NULL,
+        description VARCHAR(260) NOT NULL,
+        img VARCHAR(260) NOT NULL DEFAULT "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSwWJlhefBA3SXAlCNgOq_L7CAlPtSCCME0mg&usqp=CAU",
+        isPrivate bool NOT NULL DEFAULT false,
+        FOREIGN KEY(creatorId) REFERENCES accounts(id) ON DELETE CASCADE
+    ) default charset utf8 COMMENT '';
+
+CREATE TABLE
+    IF NOT EXISTS vaultkeeps(
+        id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+        creatorId VARCHAR(260) NOT NULL,
+        vaultId INT NOT NULL,
+        keepId INT NOT NULL,
+        FOREIGN KEY(vaultId) REFERENCES vaults(id) ON DELETE CASCADE,
+        FOREIGN KEY(keepId) REFERENCES keeps(id) ON DELETE CASCADE
+    ) default charset utf8 COMMENT '';
