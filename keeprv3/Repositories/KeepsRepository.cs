@@ -28,7 +28,7 @@ public class KeepsRepository
         string sql = @"
         SELECT
         kp.*,
-        ac.
+        ac.*
         FROM keeps kp
         JOIN accounts on ac ON ac.id = kp.creatorId;
         ";
@@ -40,4 +40,26 @@ public class KeepsRepository
 
         return keeps;
     }
+
+    internal Keep GetOneKeep(int id)
+    {
+        string sql = @"
+        SELECT
+        kp.*,
+        ac.*
+        FROM keeps kp
+        JOIN accounts ac ON ac.id = kp.creatorId
+        WHERE kp.id = @id;
+        ";
+
+        return _db.Query<Keep, Account, Keep>(sql, (keep, account) =>
+        {
+            keep.Creator = account;
+            return keep;
+        }, new { id }).FirstOrDefault();
+
+    }
+
+
+
 }

@@ -23,4 +23,22 @@ public class KeepsService
 
         return keeps;
     }
+
+    internal Keep GetOneKeep(int id, string userId)
+    {
+        Keep keep = _repo.GetOneKeep(id);
+        if (keep == null)
+        {
+            throw new Exception($"No keep at Id:{id}");
+        }
+
+        if (keep.CreatorId != userId)
+        {
+            keep.Views++;
+            // UpdateKeep(keep);
+        }
+
+        return keep;
+
+    }
 }
