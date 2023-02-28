@@ -61,5 +61,19 @@ public class KeepsRepository
     }
 
 
-
+    internal bool Update(Keep original)
+    {
+        string sql = @"
+        UPDATE keeps
+        SET
+        name = @name,
+        description = @description,
+        img = @img,
+        views = @views,
+        kept = @kept
+        WHERE id = @id;
+        ";
+        int rows = _db.Execute(sql, original);
+        return rows > 0;
+    }
 }

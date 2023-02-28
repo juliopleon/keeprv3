@@ -51,7 +51,7 @@ public class KeepsController : ControllerBase
     }
 
 
-    [HttpGet("id")]
+    [HttpGet("{id}")]
     public async Task<ActionResult<Keep>> GetOneKeep(int id)
     {
         try
@@ -61,6 +61,23 @@ public class KeepsController : ControllerBase
             Keep keep = _keepsService.GetOneKeep(id, userInfo?.Id);
             return Ok(keep);
 
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+    }
+
+    [HttpPut("{id}")]
+    [Authorize]
+    public async Task<ActionResult<Keep>> Update([FromBody] Keep keepData, int id)
+    {
+        try
+        {
+            Account userInfo = await _auth0Provider.GetUserInfoAsync<Account>(HttpContext);
+            Keep keep = _keepsService.Update(keepData, id, userInfo?.Id);
+
+            return Ok(keep);
         }
         catch (Exception e)
         {
