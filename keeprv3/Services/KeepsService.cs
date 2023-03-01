@@ -58,5 +58,7 @@ public class KeepsService
         {
             throw new Exception("your keep was not edited");
         }
+
+        return original;
     }
 }
