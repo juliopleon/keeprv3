@@ -41,4 +41,22 @@ public class KeepsService
         return keep;
 
     }
+
+    internal Keep Update(Keep keepUpdate, int id, string userId)
+    {
+        Keep original = GetOneKeep(id, userId);
+        if (original.CreatorId != userId)
+        {
+            throw new Exception("not your keep to edit");
+        }
+        original.Name = keepUpdate.Name ?? original.Name;
+        original.Description = keepUpdate.Description ?? original.Description;
+        original.Img = keepUpdate.Img ?? original.Img;
+
+        bool edited = _repo.Update(original);
+        if (edited == false)
+        {
+            throw new Exception("your keep was not edited");
+        }
+    }
 }
