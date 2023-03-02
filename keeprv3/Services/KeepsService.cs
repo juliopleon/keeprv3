@@ -62,5 +62,15 @@ public class KeepsService
         return original;
     }
 
+    internal string Remove(int id, string userId)
+    {
+        Keep original = GetOneKeep(id, userId);
+        if (original.CreatorId != userId)
+        {
+            throw new Exception("not your keep to delete!");
+        }
 
+        _repo.Remove(id);
+        return $"{original.Name} has been deleted!";
+    }
 }
