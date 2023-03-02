@@ -35,11 +35,16 @@ public class KeepsService
         if (keep.CreatorId != userId)
         {
             keep.Views++;
-            // UpdateKeep(keep);
+            UpdateKeep(keep);
         }
 
         return keep;
 
+    }
+
+    public void UpdateKeep(Keep k)
+    {
+        _repo.Update(k);
     }
 
     internal Keep Update(Keep keepUpdate, int id, string userId)
