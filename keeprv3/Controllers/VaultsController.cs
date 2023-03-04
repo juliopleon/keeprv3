@@ -34,4 +34,11 @@ public class VaultsController : ControllerBase
             return BadRequest(e.Message);
         }
     }
+
+    [HttpGet("{id}")]
+    public Task<ActionResult<Vault>> GetOneVault()
+    {
+
+    }
+
 }

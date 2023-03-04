@@ -23,4 +23,23 @@ public class VaultsRepository
 
         return vaultData;
     }
+
+    internal Vault GetOneVault(int id)
+    {
+        string sql = @"
+        SELECT
+        vt.*,
+        ac.*
+        FROM vaults vt
+        JOIN accounts ac ON ac.id = vt.creatorId
+        WHERE vt.id = @id;
+        ";
+
+        return _db.Query<Vault, Account, Vault>(sql, (vault, account) =>
+        {
+            vault.Creator = account;
+            return vault;
+        }, new { id }).FirstOrDefault();
+
+    }
 }
