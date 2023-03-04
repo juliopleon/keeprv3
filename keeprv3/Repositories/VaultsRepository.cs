@@ -43,7 +43,7 @@ public class VaultsRepository
 
     }
 
-    internal Vault Update(Vault update)
+    public bool Update(Vault update)
     {
         string sql = @"
         UPDATE vaults
