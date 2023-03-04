@@ -21,7 +21,7 @@ public class KeepsService
         List<Keep> keeps = _repo.Get();
         List<Keep> filtered = keeps.FindAll(k => k.CreatorId == userId);
 
-        return keeps;
+        return keep;
     }
 
     internal Keep GetOneKeep(int id, string userId)
