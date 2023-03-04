@@ -43,7 +43,18 @@ public class VaultsRepository
 
     }
 
-    internal Vault Update(Vault vaultData)
+    internal Vault Update(Vault update)
     {
+        string sql = @"
+        UPDATE vaults
+        SET
+        name = @name,
+        description = @description,
+        img = @img,
+        isPrivate = @isPrivate
+        WHERE id = @id;
+        ";
+        int rows = _db.Execute(sql, update);
+        return rows > 0;
     }
 }
