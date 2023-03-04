@@ -14,4 +14,21 @@ public class VaultsService
         Vault vault = _repo.Create(vaultData);
         return vault;
     }
+
+    internal Vault GetOneVault(int id, string userId)
+    {
+        Vault vault = _repo.GetOneVault(id);
+        if (vault == null)
+        {
+            throw new Exception($"No Vault at ID:{id}");
+        }
+        if (vault.IsPrivate == true && vault.CreatorId != userId)
+        {
+            throw new Exception("This vault is Private!");
+        }
+
+        return vault;
+    }
+
+
 }

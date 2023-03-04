@@ -36,9 +36,19 @@ public class VaultsController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public Task<ActionResult<Vault>> GetOneVault()
+    public async Task<ActionResult<Vault>> GetOneVault(int id)
     {
+        try
+        {
+            Account userInfo = await _auth0Provider.GetUserInfoAsync<Account>(HttpContext);
+            Vault vault = _vaultsService.GetOneVault(id, userInfo?.Id);
 
+            return Ok(vault);
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
     }
 
 }
