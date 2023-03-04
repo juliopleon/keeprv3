@@ -11,6 +11,7 @@ public class VaultsService
 
     internal Vault Create(Vault vaultData)
     {
-
+        Vault vault = _repo.Create(vaultData);
+        return vault;
     }
 }
