@@ -51,4 +51,11 @@ public class VaultsController : ControllerBase
         }
     }
 
+    [HttpPut("{id}")]
+    [Authorize]
+    public Task<ActionResult<Vault>> Update(int id, [FromBody] Vault vaultData)
+    {
+
+    }
+
 }
