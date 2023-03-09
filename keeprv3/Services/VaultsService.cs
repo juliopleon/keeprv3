@@ -30,7 +30,7 @@ public class VaultsService
         return vault;
     }
 
-    internal Vault Update(Vault vaultUpdate)
+    internal Vault Updat(Vault vaultUpdate)
     {
         Vault original = GetOneVault()
     }
