@@ -20,7 +20,7 @@ public class VaultsService
         Vault vault = _repo.GetOneVault(id);
         if (vault == null)
         {
-            throw new Exception($"No Vault at ID:{id}")
+            throw new Exception($"No Vault at ID:{id}");
         }
         if (vault.IsPrivate == true && vault.CreatorId != userId)
         {
