@@ -33,6 +33,14 @@ public class VaultsService
     internal Vault Update(Vault vaultUpdate)
     {
         Vault original = GetOneVault(vaultUpdate.Id, vaultUpdate.CreatorId);
+        if (original.CreatorId != vaultUpdate.CreatorId) throw new Exception("Not your vault!");
+        original.Name = vaultUpdate.Name ?? original.Name;
+        original.Description = vaultUpdate.Description ?? original.Description;
+        original.Img = vaultUpdate.Img ?? original.Img;
+        original.IsPrivate = vaultUpdate.IsPrivate ?? original.IsPrivate;
+
+        _repo.Update(original);
+        return original;
     }
 
 
