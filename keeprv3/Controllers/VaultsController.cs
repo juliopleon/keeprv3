@@ -61,7 +61,7 @@ public class VaultsController : ControllerBase
             vaultUpdate.CreatorId = userInfo.Id;
             vaultUpdate.Id = id;
             Vault vault = _vaultsService.Update(vaultUpdate);
-            return Ok(vault)
+            return Ok(vault);
 
         }
         catch (Exception e)
