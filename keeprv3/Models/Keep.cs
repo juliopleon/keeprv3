@@ -12,7 +12,7 @@ public class Keep
     public Account Creator { get; set; }
 }
 
-public class VaultedKeep : Keep
+public class KeepInVault : Keep
 {
     public int vaultKeepId { get; set; }
 }
