@@ -39,7 +39,7 @@
 import { computed, reactive, onMounted } from 'vue';
 import { useRoute } from "vue-router";
 import { AppState } from "../AppState.js";
-import { profilesService } from '../services/profilesService.js';
+import { profilesService } from '../services/ProfilesService.js';
 import Pop from "../utils/Pop.js";
 import { logger } from '../utils/Logger.js';
 import VaultCard from '../components/VaultCard.vue';
