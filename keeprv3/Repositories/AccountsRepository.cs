@@ -38,10 +38,50 @@ public class AccountsRepository
             UPDATE accounts
             SET 
               name = @Name,
-              picture = @Picture
+              picture = @Picture,
+              coverImg = @CoverImg
             WHERE id = @Id;";
     _db.Execute(sql, update);
     return update;
   }
+
+  internal List<Keep> GetMyKeeps(string accountId)
+  {
+    string sql = @"
+        SELECT
+        kp.*,
+        ac.*
+        FROM keeps kp
+        JOIN accounts ac ON ac.id = kp.creatorId
+        LEFT JOIN vaultkeeps vt ON vk.keepId = kp.Id
+        WHERE kp.creatorId = @accountId
+        GROUP BY kp.id;
+        ";
+    return _db.Query<Keep, Account, Keep>(sql, (keep, account) =>
+    {
+      keep.Creator = account;
+      return keep;
+    }, new { accountId }).ToList();
+  }
+
+
+
+  internal List<Vault> GetMyVaults(string accountId)
+  {
+    string sql = @"
+        SELECT
+        ac.*,
+        vt.*
+        FROM vaults vt
+        JOIN accounts ac ON ac.id = vt.creatorId
+        WHERE vt.creatorId = @accountId;
+        ";
+    return _db.Query<Account, Vault, Vault>(sql, (account, vault) =>
+    {
+      vault.Creator = account;
+      return vault;
+    }, new { accountId }).ToList();
+  }
+
 }
 

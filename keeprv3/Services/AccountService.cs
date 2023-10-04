@@ -29,6 +29,17 @@ public class AccountService
     Account original = GetProfileByEmail(userEmail);
     original.Name = editData.Name.Length > 0 ? editData.Name : original.Name;
     original.Picture = editData.Picture.Length > 0 ? editData.Picture : original.Picture;
+    original.CoverImg = editData.CoverImg ?? original.CoverImg;
     return _repo.Edit(original);
+  }
+
+  internal List<Vault> GetMyVaults(string creatorId)
+  {
+    return _repo.GetMyVaults(creatorId);
+  }
+
+  internal List<Keep> GetMyKeeps(string creatorId)
+  {
+    return _repo.GetMyKeeps(creatorId);
   }
 }

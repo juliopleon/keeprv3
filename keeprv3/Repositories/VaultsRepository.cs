@@ -15,16 +15,16 @@ public class VaultsRepository
         INSERT INTO vaults
         (creatorId, name, description, img, isPrivate)
         VALUES
-        (@creatorId, @name, @description, @img, @isPrivate);
+        (@creatorId,@name, @description, @img, @isPrivate);
         SELECT LAST_INSERT_ID();
         ";
         int id = _db.ExecuteScalar<int>(sql, vaultData);
         vaultData.Id = id;
-
         return vaultData;
+
     }
 
-    internal Vault GetOneVault(int id)
+    internal Vault GetOne(int id)
     {
         string sql = @"
         SELECT
@@ -40,7 +40,6 @@ public class VaultsRepository
             vault.Creator = account;
             return vault;
         }, new { id }).FirstOrDefault();
-
     }
 
     public bool Update(Vault update)
@@ -56,5 +55,16 @@ public class VaultsRepository
         ";
         int rows = _db.Execute(sql, update);
         return rows > 0;
+    }
+
+    internal bool Remove(int id)
+    {
+        string sql = @"
+        DELETE FROM vaults
+        WHERE id = @id;
+        ";
+        int rows = _db.Execute(sql, new { id });
+        return rows > 0;
+
     }
 }

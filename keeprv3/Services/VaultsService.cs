@@ -4,9 +4,12 @@ public class VaultsService
 {
     private readonly VaultsRepository _repo;
 
-    public VaultsService(VaultsRepository repo)
+    private readonly KeepsService _keepsService;
+
+    public VaultsService(VaultsRepository repo, KeepsService keepsService)
     {
         _repo = repo;
+        _keepsService = keepsService;
     }
 
     internal Vault Create(Vault vaultData)
@@ -15,24 +18,24 @@ public class VaultsService
         return vault;
     }
 
-    internal Vault GetOneVault(int id, string userId)
+    internal Vault GetOne(int id, string userId)
     {
-        Vault vault = _repo.GetOneVault(id);
+        Vault vault = _repo.GetOne(id);
         if (vault == null)
         {
             throw new Exception($"No Vault at ID:{id}");
         }
         if (vault.IsPrivate == true && vault.CreatorId != userId)
         {
-            throw new Exception("This vault is Private!");
-        }
+            throw new Exception("Private Vaults are Private!");
 
+        }
         return vault;
     }
 
     internal Vault Update(Vault vaultUpdate)
     {
-        Vault original = GetOneVault(vaultUpdate.Id, vaultUpdate.CreatorId);
+        Vault original = GetOne(vaultUpdate.Id, vaultUpdate.CreatorId);
         if (original.CreatorId != vaultUpdate.CreatorId) throw new Exception("Not your vault!");
         original.Name = vaultUpdate.Name ?? original.Name;
         original.Description = vaultUpdate.Description ?? original.Description;
@@ -43,5 +46,20 @@ public class VaultsService
         return original;
     }
 
+    internal string Remove(int id, string userId)
+    {
+        Vault original = GetOne(id, userId);
+        if (original.CreatorId != userId)
+        {
+            throw new Exception("Not your Vault to delete!");
+        }
+
+        _repo.Remove(id);
+        return $"{original.Name} has been Deleted";
+    }
 
 }
+
+
+
+

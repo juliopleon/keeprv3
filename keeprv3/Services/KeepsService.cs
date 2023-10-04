@@ -4,16 +4,19 @@ public class KeepsService
 {
     private readonly KeepsRepository _repo;
 
-    public KeepsService(KeepsRepository repo)
+    private readonly VaultsRepository _vRepo;
+    public KeepsService(KeepsRepository repo, VaultsRepository vRepo)
     {
         _repo = repo;
+
+        _vRepo = vRepo;
     }
 
     internal Keep Create(Keep keepData)
     {
         Keep keep = _repo.Create(keepData);
-        return keep;
 
+        return keep;
     }
 
     internal List<Keep> Get(string userId)
@@ -24,12 +27,12 @@ public class KeepsService
         return keeps;
     }
 
-    internal Keep GetOneKeep(int id, string userId)
+    internal Keep GetOne(int id, string userId)
     {
-        Keep keep = _repo.GetOneKeep(id);
+        Keep keep = _repo.GetOne(id);
         if (keep == null)
         {
-            throw new Exception($"No keep at Id:{id}");
+            throw new Exception($"No Keep found at ID: {id}");
         }
 
         if (keep.CreatorId != userId)
@@ -37,9 +40,7 @@ public class KeepsService
             keep.Views++;
             UpdateKeep(keep);
         }
-
         return keep;
-
     }
 
     public void UpdateKeep(Keep k)
@@ -49,7 +50,7 @@ public class KeepsService
 
     internal Keep Update(Keep keepUpdate, int id, string userId)
     {
-        Keep original = GetOneKeep(id, userId);
+        Keep original = GetOne(id, userId);
         if (original.CreatorId != userId)
         {
             throw new Exception("not your keep to edit");
@@ -61,7 +62,7 @@ public class KeepsService
         bool edited = _repo.Update(original);
         if (edited == false)
         {
-            throw new Exception("your keep was not edited");
+            throw new Exception("Your Keep was not edited");
         }
 
         return original;
@@ -69,13 +70,47 @@ public class KeepsService
 
     internal string Remove(int id, string userId)
     {
-        Keep original = GetOneKeep(id, userId);
+        Keep original = GetOne(id, userId);
         if (original.CreatorId != userId)
         {
-            throw new Exception("not your keep to delete!");
+            throw new Exception("Not your Keep to Delete!");
         }
 
         _repo.Remove(id);
-        return $"{original.Name} has been deleted!";
+        return $"{original.Name} has been deleted";
     }
+
+    // NOTE come back and put a getvaultkeeps() to get keeps in a vault
+
+    // internal Keep KeepCount(int id)
+    // {
+    //     Keep keep = _repo.GetOne(id);
+    //     keep.Kept++;
+    //     _repo.Update(keep);
+    //     return keep;
+    // }
+
+    // internal Keep ViewCount(int id)
+    // {
+    //     Keep keep = _repo.GetOne(id);
+    //     keep.Views++;
+    //     _repo.Update(keep);
+    //     return keep;
+    // }
+
+    internal List<KeepInVault> GetKeeps(int id, string userId)
+    {
+        Vault vault = _vRepo.GetOne(id);
+
+        if (vault.CreatorId != userId && vault.IsPrivate == true)
+        {
+            throw new Exception("Don't have access!");
+        }
+        List<KeepInVault> keepInVaults = _repo.GetVaultKeeps(id);
+        return keepInVaults;
+    }
+
+
+
+
 }

@@ -52,13 +52,13 @@ public class KeepsController : ControllerBase
 
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<Keep>> GetOneKeep(int id)
+    public async Task<ActionResult<Keep>> GetOne(int id)
     {
         try
         {
             Account userInfo = await _auth0Provider.GetUserInfoAsync<Account>(HttpContext);
 
-            Keep keep = _keepsService.GetOneKeep(id, userInfo?.Id);
+            Keep keep = _keepsService.GetOne(id, userInfo?.Id);
             return Ok(keep);
 
         }

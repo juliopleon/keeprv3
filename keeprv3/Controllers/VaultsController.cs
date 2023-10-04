@@ -8,10 +8,15 @@ public class VaultsController : ControllerBase
     private readonly VaultsService _vaultsService;
     private readonly Auth0Provider _auth0Provider;
 
-    public VaultsController(VaultsService vaultsService, Auth0Provider auth0Provider)
+    private readonly KeepsService _keepsService;
+
+
+
+    public VaultsController(VaultsService vaultsService, Auth0Provider auth0Provider, KeepsService keepsService)
     {
         _vaultsService = vaultsService;
         _auth0Provider = auth0Provider;
+        _keepsService = keepsService;
     }
 
     [HttpPost]
@@ -27,7 +32,6 @@ public class VaultsController : ControllerBase
             vault.Creator = userInfo;
 
             return Ok(vault);
-
         }
         catch (Exception e)
         {
@@ -36,14 +40,14 @@ public class VaultsController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<Vault>> GetOneVault(int id)
+    public async Task<ActionResult<Vault>> GetOne(int id)
     {
         try
         {
             Account userInfo = await _auth0Provider.GetUserInfoAsync<Account>(HttpContext);
-            Vault vault = _vaultsService.GetOneVault(id, userInfo?.Id);
-
+            Vault vault = _vaultsService.GetOne(id, userInfo?.Id);
             return Ok(vault);
+
         }
         catch (Exception e)
         {
@@ -69,5 +73,37 @@ public class VaultsController : ControllerBase
             return BadRequest(e.Message);
         }
     }
+
+    [HttpDelete("{id}")]
+    [Authorize]
+    public async Task<ActionResult<string>> Remove(int id)
+    {
+        try
+        {
+            Account userInfo = await _auth0Provider.GetUserInfoAsync<Account>(HttpContext);
+            string message = _vaultsService.Remove(id, userInfo.Id);
+            return Ok(message);
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+    }
+
+    [HttpGet("{id}/keeps")]
+    public async Task<ActionResult<List<VaultKeep>>> GetVaultKeepsAsync(int id)
+    {
+        try
+        {
+            Account userInfo = await _auth0Provider.GetUserInfoAsync<Account>(HttpContext);
+            List<VaultKeep> keepInVaults = _keepsService.GetKeeps(id, userInfo?.Id);
+            return Ok(keepInVaults);
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+    }
+
 
 }

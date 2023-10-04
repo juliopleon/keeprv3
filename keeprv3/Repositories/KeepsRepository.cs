@@ -30,7 +30,7 @@ public class KeepsRepository
         kp.*,
         ac.*
         FROM keeps kp
-        JOIN accounts on ac ON ac.id = kp.creatorId;
+        JOIN accounts ac ON ac.id = kp.creatorId;
         ";
         List<Keep> keeps = _db.Query<Keep, Account, Keep>(sql, (keep, account) =>
         {
@@ -41,10 +41,12 @@ public class KeepsRepository
         return keeps;
     }
 
-    internal Keep GetOneKeep(int id)
+
+    // NOTE you will need to come back add kept count and view count
+    internal Keep GetOne(int id)
     {
         string sql = @"
-        SELECT
+        SELECT 
         kp.*,
         ac.*
         FROM keeps kp
@@ -56,10 +58,9 @@ public class KeepsRepository
         {
             keep.Creator = account;
             return keep;
+
         }, new { id }).FirstOrDefault();
-
     }
-
 
     internal bool Update(Keep original)
     {
@@ -85,5 +86,27 @@ public class KeepsRepository
         ";
         int rows = _db.Execute(sql, new { id });
         return rows > 0;
+
+    }
+
+    internal List<KeepInVault> GetVaultKeeps(int id)
+    {
+        string sql = @"
+        SELECT
+        kp.*,
+        vk.*,
+        ac.*
+        FROM vaultkeeps vk
+        JOIN keeps kp ON kp.id = vk.keepId
+        JOIN accounts ac ON kp.creatorId = ac.id
+        WHERE vk.vaultId = @id;
+        ";
+        List<KeepInVault> keepInVaults = _db.Query<KeepInVault, VaultKeep, Account, KeepInVault>(sql, (kp, vk, ac) =>
+        {
+            kp.vaultKeepId = vk.Id;
+            kp.Creator = ac;
+            return kp;
+        }, new { id }).ToList();
+        return keepInVaults;
     }
 }
