@@ -82,6 +82,5 @@ a:hover {
     height: 64px;
   }
 
-  ;
 }
 </style>
