@@ -170,7 +170,7 @@ export default {
     font-style: normal;
     font-weight: 400;
     font-size: 48px;
-    line-height: 64px
+    line-height: 64px;
 }
 
 .description {
