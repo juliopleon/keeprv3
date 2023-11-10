@@ -123,7 +123,7 @@ export default {
                         keepId: AppState.activeKeep.id, vaultId: editable.value.id
                     }
                     await vaultsService.addToVault(vaultKeepData)
-                    Pop.success(`You added it to your vault!`)
+                    Pop.success(`You added it to your vault!`);
                 } catch (error) {
                     Pop.error(error)
                 }
