@@ -127,7 +127,7 @@ export default {
                 } catch (error) {
                     Pop.error(error)
                 }
-            }
+            },
 
             async deleteKeep() {
                 try {
