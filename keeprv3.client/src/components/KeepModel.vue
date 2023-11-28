@@ -16,66 +16,66 @@
                         <div class="d-flex gap-3 grey">
                             <div class="d-flex">
                                 <i class="mdi mdi-eye fs-4"></i>
-                                <p class="mt-2">{{ keep?.views }} </p>
+                                <p class="mt-2">{{ keep?.views }} </p </div>
+                                <div class="d-flex">
+                                    <i class="mdi mdi-alpha-k-box fs-4"></i>
+                                    <p class="mt-2">{{ keep?.kept }} </p>
+                                </div>
                             </div>
-                            <div class="d-flex">
-                                <i class="mdi mdi-alpha-k-box fs-4"></i>
-                                <p class="mt-2">{{ keep?.kept }} </p>
-                            </div>
-                        </div>
-                        <div class=" me-3">
-                            <div v-if="keep?.creator.id == account?.id">
-                                <i class="mdi mdi-delete  text-danger fs-3 selectable rounded-3" title="remove keep"
-                                    @click="deleteKeep()"></i>
-                            </div>
-                            <div v-if="user?.isAuthenticated">
-                                <div v-if="vault?.creator.id == account?.id">
-                                    <div class="dropdown ">
-                                        <i class="mdi mdi-dots-horizontal fs-1 " title="Remove From Vault" type="button"
-                                            data-bs-toggle="dropdown" aria-expanded="false"></i>
-                                        <ul class="dropdown-menu">
-                                            <li @click="deleteVaultKeep(keep.id)" class="selectable no-select">
-                                                Remove From Vault
-                                            </li>
+                            <div class=" me-3">
+                                <div v-if="keep?.creator.id == account?.id">
+                                    <i class="mdi mdi-delete  text-danger fs-3 selectable rounded-3" title="remove keep"
+                                        @click="deleteKeep()"></i>
+                                </div>
+                                <div v-if="user?.isAuthenticated">
+                                    <div v-if="vault?.creator.id == account?.id">
+                                        <div class="dropdown ">
+                                            <i class="mdi mdi-dots-horizontal fs-1 " title="Remove From Vault" type="button"
+                                                data-bs-toggle="dropdown" aria-expanded="false"></i>
+                                            <ul class="dropdown-menu">
+                                                <li @click="deleteVaultKeep(keep.id)" class="selectable no-select">
+                                                    Remove From Vault
+                                                </li>
 
-                                        </ul>
+                                            </ul>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="">
-                    <h4 class="text-center keep-name">
-                        {{ keep?.name }}
-                    </h4>
-                    <p class="p-4 grey description">
-                        {{ keep?.description }}
-                    </p>
-                </div>
-                <div class="d-flex justify-content-end justify-content-between">
+                    <div class="">
+                        <h4 class="text-center keep-name">
+                            {{ keep?.name }}
+                        </h4>
+                        <p class="p-4 grey description">
+                            {{ keep?.description }}
+                        </p>
+                    </div>
+                    <div class="d-flex justify-content-end justify-content-between">
 
-                    <form @submit.prevent="addToVault(keep.id)" v-if="user.isAuthenticated">
-                        <div class="d-flex">
-                            <select class="form-select border-0" v-model="editable">
-                                <option v-for="v in vaults" :value="v"><a class="dropdown-item" placeholder="Add to Vault">
-                                        {{ v?.name }}
-                                    </a></option>
-                            </select>
-                            <button class="btn save border-0" type="submit">save</button>
+                        <form @submit.prevent="addToVault(keep.id)" v-if="user.isAuthenticated">
+                            <div class="d-flex">
+                                <select class="form-select border-0" v-model="editable">
+                                    <option v-for="v in vaults" :value="v"><a class="dropdown-item"
+                                            placeholder="Add to Vault">
+                                            {{ v?.name }}
+                                        </a></option>
+                                </select>
+                                <button class="btn save border-0" type="submit">save</button>
+                            </div>
+                        </form>
+                        <div class="d-flex me-3 mb-1" v-if="keep?.creator">
+                            <router-link :to="{ name: 'Profile', params: { id: keep?.creatorId } }">
+                                <img :src="keep?.creator.picture" alt="" class="rounded-circle mx-2 mb-2" height="40"
+                                    width="40" data-bs-dismiss="modal">
+                            </router-link>
+                            <p class="name">{{ keep?.creator.name }}</p>
                         </div>
-                    </form>
-                    <div class="d-flex me-3 mb-1" v-if="keep?.creator">
-                        <router-link :to="{ name: 'Profile', params: { id: keep?.creatorId } }">
-                            <img :src="keep?.creator.picture" alt="" class="rounded-circle mx-2 mb-2" height="40" width="40"
-                                data-bs-dismiss="modal">
-                        </router-link>
-                        <p class="name">{{ keep?.creator.name }}</p>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 </template>
 
 
