@@ -138,7 +138,7 @@ export default {
                 } catch (error) {
                     Pop.error(error)
                 }
-            }
+            },
 
             async deleteVaultKeep(keepId) {
                 try {
