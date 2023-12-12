@@ -125,7 +125,7 @@ export default {
                     await vaultsService.addToVault(vaultKeepData)
                     Pop.success(`You added it to your vault!`)
                 } catch (error) {
-                    Pop.error(error)
+                    Pop.error(error);
                 }
             },
 
