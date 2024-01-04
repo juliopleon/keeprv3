@@ -131,6 +131,7 @@ export default {
 
             async deleteKeep() {
                 try {
+                    ;
                     if (await Pop.confirm()) {
                         await keepsService.deleteKeep(AppState.activeKeep.id)
                         Modal.getOrCreateInstance('#keep-modal').hide()
