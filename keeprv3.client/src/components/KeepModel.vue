@@ -152,7 +152,7 @@ export default {
                         Modal.getOrCreateInstance('#keep-modal').hide()
                     }
                 } catch (error) {
-                    Pop.error(error);
+                    Pop.error(error)
                 }
             },
 
