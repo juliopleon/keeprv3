@@ -171,7 +171,6 @@ export default {
     font-weight: 400;
     font-size: 48px;
     line-height: 64px;
-    ;
 }
 
 .description {
