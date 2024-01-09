@@ -149,7 +149,7 @@ export default {
                         let vaultKeep = this.vaultKeep.find(v => v.id == keepId)
 
                         await vaultsService.deleteVaultKeep(vaultKeep.vaultKeepId)
-                        Modal.getOrCreateInstance('#keep-modal').hide()
+                        Modal.getOrCreateInstance('#keep-modal').hide();
                     }
                 } catch (error) {
                     Pop.error(error)
