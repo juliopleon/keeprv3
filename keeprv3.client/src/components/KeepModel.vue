@@ -12,7 +12,6 @@
                 <div class="">
                     <div class="text-center d-flex justify-content-between ">
                         <div class="d-flex p-1">
-
                         </div>
                         <div class="d-flex gap-3 grey">
                             <div class="d-flex">
