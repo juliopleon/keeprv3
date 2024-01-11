@@ -16,7 +16,7 @@
                         <div class="d-flex gap-3 grey">
                             <div class="d-flex">
                                 <i class="mdi mdi-eye fs-4"></i>
-                                <p class="mt-2">{{ keep?.views }} </p>
+                                <p class="mt-2">{{ keep?.view }} </p>
                             </div>
                             <div class="d-flex">
                                 <i class="mdi mdi-alpha-k-box fs-4"></i>
