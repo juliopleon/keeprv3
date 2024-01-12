@@ -52,7 +52,6 @@
                     <p class="p-4 grey description">
                         {{ keep?.description }}
                     </p>
-
                 </div>
                 <div class="d-flex justify-content-end justify-content-between">
 
