@@ -70,7 +70,7 @@
                             <img :src="keep?.creator.picture" alt="" class="rounded-circle mx-2 mb-2" height="40" width="40"
                                 data-bs-dismiss="modal">
                         </router-link>
-                        <p class="name">{{ keep?.creator.name }}</p>;
+                        <p class="name">{{ keep?.creator.name }}</p>
                     </div>
                 </div>
             </div>
