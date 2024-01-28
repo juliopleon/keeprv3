@@ -62,7 +62,7 @@
                                         {{ v?.name }}
                                     </a></option>
                             </select>
-                            <button class="btn save border-0" type="submit">save</button>
+                            <button class="btn save border-0" type="submitt">save</button>
                         </div>
                     </form>
                     <div class="d-flex me-3 mb-1" v-if="keep?.creator">
