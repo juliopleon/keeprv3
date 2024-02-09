@@ -94,71 +94,70 @@ export default {
     //         type: Object,
     //         required: true
     //     }
-    // },
-    setup() {
-        const editable = ref({})
-        const route = useRoute()
+},
+setup() {
+    const editable = ref({})
+    const route = useRoute()
 
-        // MAKE A FUNCTION THAT GOES AND GETS ALL THE KeepInVault 
-        // THIS WILL HAVE A DIFFERENT URL THAN A NORMAL KEEP || MAKE SURE TO PASS DOWN THE VAULT ID 
+    // MAKE A FUNCTION THAT GOES AND GETS ALL THE KeepInVault 
+    // THIS WILL HAVE A DIFFERENT URL THAN A NORMAL KEEP || MAKE SURE TO PASS DOWN THE VAULT ID 
 
-        return {
-            editable,
-            vaults: computed(() => AppState.myVaults),
-            activeVault: computed(() => AppState.activeVault),
-            account: computed(() => AppState.account),
-            keep: computed(() => AppState.activeKeep),
-            user: computed(() => AppState.user),
-            vault: computed(() => AppState.activeVault),
-            vaultKeep: computed(() => AppState.vaultKeeps),
-            activeVaultKeep: computed(() => AppState.activeVaultKeep),
-            // routeAccount: computed(() => route.name.includes('Account')),
-            // routeVault: computed(() => route.name.includes('Vault')),
-            // routeHome: computed(() => route.name.includes('Home')),
+    return {
+        editable,
+        vaults: computed(() => AppState.myVaults),
+        activeVault: computed(() => AppState.activeVault),
+        account: computed(() => AppState.account),
+        keep: computed(() => AppState.activeKeep),
+        user: computed(() => AppState.user),
+        vault: computed(() => AppState.activeVault),
+        vaultKeep: computed(() => AppState.vaultKeeps),
+        activeVaultKeep: computed(() => AppState.activeVaultKeep),
+        // routeAccount: computed(() => route.name.includes('Account')),
+        // routeVault: computed(() => route.name.includes('Vault')),
+        // routeHome: computed(() => route.name.includes('Home')),
 
 
-            async addToVault() {
-                try {
-                    let vaultKeepData = {
-                        keepId: AppState.activeKeep.id, vaultId: editable.value.id
-                    }
-                    await vaultsService.addToVault(vaultKeepData)
-                    Pop.success(`You added it to your vault!`)
-                } catch (error) {
-                    Pop.error(error)
+        async addToVault() {
+            try {
+                let vaultKeepData = {
+                    keepId: AppState.activeKeep.id, vaultId: editable.value.id
                 }
-            },
+                await vaultsService.addToVault(vaultKeepData)
+                Pop.success(`You added it to your vault!`)
+            } catch (error) {
+                Pop.error(error)
+            }
+        },
 
-            async deleteKeep() {
-                try {
-                    if (await Pop.confirm()) {
-                        await keepsService.deleteKeep(AppState.activeKeep.id)
-                        Modal.getOrCreateInstance('#keep-modal').hide()
-                    }
-                } catch (error) {
-                    Pop.error(error)
+        async deleteKeep() {
+            try {
+                if (await Pop.confirm()) {
+                    await keepsService.deleteKeep(AppState.activeKeep.id)
+                    Modal.getOrCreateInstance('#keep-modal').hide()
                 }
-            },
+            } catch (error) {
+                Pop.error(error)
+            }
+        },
 
-            async deleteVaultKeep(keepId) {
-                try {
+        async deleteVaultKeep(keepId) {
+            try {
 
-                    // console.log(vaultKeep);
-                    if (await Pop.confirm()) {
+                // console.log(vaultKeep);
+                if (await Pop.confirm()) {
 
-                        let vaultKeep = this.vaultKeep.find(v => v.id == keepId)
+                    let vaultKeep = this.vaultKeep.find(v => v.id == keepId)
 
-                        await vaultsService.deleteVaultKeep(vaultKeep.vaultKeepId)
-                        Modal.getOrCreateInstance('#keep-modal').hide()
-                    }
-                } catch (error) {
-                    Pop.error(error)
+                    await vaultsService.deleteVaultKeep(vaultKeep.vaultKeepId)
+                    Modal.getOrCreateInstance('#keep-modal').hide()
                 }
-            },
+            } catch (error) {
+                Pop.error(error)
+            }
+        },
 
-        };
-    },
-    components: { RouterLink }
+    };
+},
 };
 </script>
 
