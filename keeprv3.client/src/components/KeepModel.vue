@@ -95,7 +95,7 @@ export default {
     //         required: true
     //     }
     // },
-    setup() {
+    setup() {,
         const editable = ref({})
         const route = useRoute()
 
