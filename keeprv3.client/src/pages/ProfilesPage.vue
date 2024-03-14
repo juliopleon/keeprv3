@@ -77,6 +77,7 @@ export default {
         onMounted(() => {
             getProfile();
             getProfileKeeps();
+            
             getProfileVaults();
         });
         return {
