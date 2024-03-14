@@ -95,9 +95,10 @@ export default {
     //         required: true
     //     }
     // },
-    setup() {,
+    setup() {
         const editable = ref({})
         const route = useRoute()
+
 
         // MAKE A FUNCTION THAT GOES AND GETS ALL THE KeepInVault 
         // THIS WILL HAVE A DIFFERENT URL THAN A NORMAL KEEP || MAKE SURE TO PASS DOWN THE VAULT ID 

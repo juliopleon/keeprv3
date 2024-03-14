@@ -53,7 +53,7 @@ export default {
             }
             catch (error) {
                 logger.error(error)
-                Pop.error(error)
+                Pop.error(error);
             }
         }
         async function getProfileVaults() {
