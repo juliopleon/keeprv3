@@ -77,7 +77,7 @@ export default {
         onMounted(() => {
             getProfile();
             getProfileKeeps();
-            getProfileVaults();
+            getProfileVaults()
         });
         return {
             profile: computed(() => AppState.activeProfile),
